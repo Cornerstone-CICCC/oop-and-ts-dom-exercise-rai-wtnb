@@ -2,31 +2,35 @@ class Calculator {
   #num1;
   #num2;
   #operation;
+  #calculateBtn;
+  #result;
 
-  constructor(num1, num2, operation) {
-    this.#num1 = Number(num1);
-    this.#num2 = Number(num2);
-    this.#operation = operation;
+  constructor() {
+    this.#num1 = document.getElementById("num1");
+    this.#num2 = document.getElementById("num2");
+    this.#operation = document.getElementById("operation");
+    this.#calculateBtn = document.getElementById("calculateBtn");
+    this.#result = document.getElementById("result");
   }
 
   #add() {
-    return this.#num1 + this.#num2;
+    return parseFloat(this.#num1.value) + parseFloat(this.#num2.value);
   }
 
   #subtract() {
-    return this.#num1 - this.#num2;
+    return parseFloat(this.#num1.value) - parseFloat(this.#num2.value);
   }
 
   #multiply() {
-    return this.#num1 * this.#num2;
+    return parseFloat(this.#num1.value) * parseFloat(this.#num2.value);
   }
 
   #divide() {
-    return this.#num1 / this.#num2;
+    return parseFloat(this.#num1.value) / parseFloat(this.#num2.value);
   }
 
-  compute() {
-    switch (this.#operation) {
+  #compute() {
+    switch (this.#operation.value) {
       case "add":
         return this.#add();
       case "subtract":
@@ -39,15 +43,16 @@ class Calculator {
         return "Invalid operation";
     }
   }
+
+  #render() {
+    this.#result.textContent = this.#compute();
+  }
+
+  addCalculateBtnEventListener() {
+    this.#calculateBtn.addEventListener("click", () => {
+      this.#render();
+    });
+  }
 }
 
-const num1 = document.getElementById("num1");
-const num2 = document.getElementById("num2");
-const operation = document.getElementById("operation");
-const calculateBtn = document.getElementById("calculateBtn");
-const result = document.getElementById("result");
-
-calculateBtn.addEventListener("click", () => {
-  const calculator = new Calculator(num1.value, num2.value, operation.value);
-  result.textContent = calculator.compute();
-});
+new Calculator().addCalculateBtnEventListener();
